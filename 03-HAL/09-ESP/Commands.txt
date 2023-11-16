@@ -1,0 +1,22 @@
+/********************************************************/
+/* Notes :                                             */
+/*         After all command we must click enter      */
+/*	   Then ctrl+j	                             */
+/*	   which equal in ASCII -> \r\n             */
+/***************************************************/
+
+1) AT -> Test 
+2) ATE0 -> turn off echo , ATE1 -> turn on echo
+3) AT+RST -> SW restart 
+4) AT+CWMODE=1 -> we configure the wifi module by first Mode 
+5) AT+CWJAP_CUR="router Name","Password" -> to connect wifi to router
+6) AT+CIPSTART="MODE","IP",port -> to connect wifi to site (server)
+		Mode always = "TCP"
+		Port always = 80 
+
+7) AT+CIPSEND=42 -> numbers of data will send with \r\n in general Data +2
+   then will appear 
+
+   > GET http://abdofirstweb.orgfree.com/LEDfile.txt
+	     
+	
