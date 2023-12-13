@@ -33,8 +33,13 @@ void MGPIO_VidSetPinDirection( u8 Copy_u8Port , u8 Copy_u8Pin , u8 u8Copy_u8Mode
 			Copy_u8Pin = Copy_u8Pin - 8;
 			GPIOA_CRH &= ~ ( ( 0b1111 )    << ( Copy_u8Pin * 4 ) );
 			GPIOA_CRH |= ( u8Copy_u8Mode ) << ( Copy_u8Pin * 4 );
+			Copy_u8Pin = Copy_u8Pin + 8;
 		}
-
+		#if u8Copy_u8Mode == INPUT_PULLUP
+			GPIOA_BSRR = (1 << Copy_u8Pin);
+		#elif  u8Copy_u8Mode == INPUT_PULLDOWN
+			GPIOA_BRR = (1 << Copy_u8Pin);
+		#endif
 		break;
 
 	case GPIOB:
@@ -51,7 +56,13 @@ void MGPIO_VidSetPinDirection( u8 Copy_u8Port , u8 Copy_u8Pin , u8 u8Copy_u8Mode
 			Copy_u8Pin = Copy_u8Pin - 8;
 			GPIOB_CRH &= ~ ( ( 0b1111 )    << ( Copy_u8Pin * 4 ) );
 			GPIOB_CRH |= ( u8Copy_u8Mode ) << ( Copy_u8Pin * 4 )  ;
+			Copy_u8Pin = Copy_u8Pin + 8;
 		}
+		#if u8Copy_u8Mode == INPUT_PULLUP
+			GPIOB_BSRR = (1 << Copy_u8Pin);
+		#elif  u8Copy_u8Mode == INPUT_PULLDOWN
+			GPIOB_BRR = (1 << Copy_u8Pin);
+		#endif
 		break;
 	case GPIOC:
 		if(Copy_u8Pin <= 7 )
@@ -64,7 +75,13 @@ void MGPIO_VidSetPinDirection( u8 Copy_u8Port , u8 Copy_u8Pin , u8 u8Copy_u8Mode
 			Copy_u8Pin = Copy_u8Pin - 8;
 			GPIOC_CRH &= ~ ( ( 0b1111 )    << ( Copy_u8Pin * 4 ) );
 			GPIOC_CRH |= ( u8Copy_u8Mode ) << ( Copy_u8Pin * 4 )  ;
+			Copy_u8Pin = Copy_u8Pin + 8;
 		}
+		#if u8Copy_u8Mode == INPUT_PULLUP
+			GPIOC_BSRR = (1 << Copy_u8Pin);
+		#elif  u8Copy_u8Mode == INPUT_PULLDOWN
+			GPIOC_BRR = (1 << Copy_u8Pin);
+		#endif
 		break;
 	default :break;
 	}
@@ -150,4 +167,44 @@ u8   MGPIO_u8GetPinValue( u8 Copy_u8Port , u8 Copy_u8Pin ){
 		break;
 	}
 	return LOC_u8Result;
+}
+
+void MGPIO_VidSetPinValueAtomic( u8 Copy_u8Port , u8 Copy_u8Pin , u8 u8Copy_u8Value )
+{
+	switch(Copy_u8Port)
+	{
+	case GPIOA:
+		if( u8Copy_u8Value == HIGH ){
+ 
+				GPIOA_BSRR = (1 << Copy_u8Pin);
+				
+		}else if( u8Copy_u8Value == LOW ){
+			
+				GPIOA_BRR = (1 << Copy_u8Pin);
+		}
+		break;
+		
+	case GPIOB:
+		if( u8Copy_u8Value == HIGH ){
+
+				GPIOB_BSRR = (1 << Copy_u8Pin);
+
+		}else if( u8Copy_u8Value == LOW ){
+
+				GPIOB_BRR = (1 << Copy_u8Pin);
+		}
+		break;
+		
+	case GPIOC:
+		if( u8Copy_u8Value == HIGH ){
+
+				GPIOC_BSRR = (1 << Copy_u8Pin);
+
+		}else if( u8Copy_u8Value == LOW ){
+ 
+				GPIOC_BRR = (1 << Copy_u8Pin);
+		}
+		break;
+
+	}
 }
