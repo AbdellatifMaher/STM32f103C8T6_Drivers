@@ -37,8 +37,6 @@ void RCC_voidInitSysClock(void)
 		//while(!(GET_BIT(RCC_CR,1))); /* Check if enabled */
 		
 	#elif   RCC_CLOCK_TYPE == RCC_PLL
-		
-	RCC_CFGR = ( RCC_CFGR | ((RCC_PLL_MUL_VAL - 2) << 18) ); /* Set PLL Multiplier */
 	
 		#if   RCC_PLL_INPUT == RCC_PLL_IN_HSI_DIV_2
 			
