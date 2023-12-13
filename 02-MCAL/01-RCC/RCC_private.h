@@ -33,9 +33,36 @@
 #define RCC_PLL_IN_HSE_RC_DIV_2       3
 #define RCC_PLL_IN_HSE_RC             4
 
+/* USB prescaler */ 
+
+#define RCC_USB_DIV_1_5     0
+#define RCC_USB_NO_DIV      1
+
+/* APB (high,low)-speed prescaler (APB1,APB2) */ 
+
+#define RCC_HCLK_NO_DIV    0
+#define RCC_HCLK_DIV_2	   4
+#define RCC_HCLK_DIV_4     5
+#define RCC_HCLK_DIV_8     6
+#define RCC_HCLK_DIV_16    7
+
+/* AHB prescaler */ 
+
+#define RCC_SYSCLK_NO_DIV     0
+#define RCC_SYSCLK_DIV_2      8
+#define RCC_SYSCLK_DIV_4      9
+#define RCC_SYSCLK_DIV_8      10
+#define RCC_SYSCLK_DIV_16     11
+#define RCC_SYSCLK_DIV_64     12
+#define RCC_SYSCLK_DIV_128    13
+#define RCC_SYSCLK_DIV_256    14
+#define RCC_SYSCLK_DIV_512	  15
 
 
-
-
+/* ADC prescaler */ 
+#define RCC_PCLK2_DIV_2  0
+#define RCC_PCLK2_DIV_4  1
+#define RCC_PCLK2_DIV_6  2
+#define RCC_PCLK2_DIV_8  3
 
 #endif

@@ -14,56 +14,73 @@
 
 
 void RCC_voidInitSysClock(void)
-{
+{	
 	#if     RCC_CLOCK_TYPE == RCC_HSE_CRYSTAL
-		RCC_CR   = 0x00010000; /* Enable HSE with no bypass */
+		
+		RCC_CFGR = (0x00000001 | (RCC_USB_PRE<<22) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+		
+		RCC_CR   = 0x00010000; /* Enable HSE without bypass */
 		//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
-		RCC_CFGR = 0x00000001;
 		
 	#elif   RCC_CLOCK_TYPE == RCC_HSE_RC
+		
+		RCC_CFGR = (0x00000001 | (RCC_USB_PRE<<22) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+		
 		RCC_CR   = 0x00050000; /* Enable HSE with bypass */
 		//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
-		RCC_CFGR = 0x00000001;
 		
 	#elif   RCC_CLOCK_TYPE == RCC_HSI
+		
+		RCC_CFGR = (0x00000000 | (RCC_USB_PRE<<22) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+		
 		RCC_CR   = 0x00000081; /* Enable HSI + Trimming = 0 */
 		//while(!(GET_BIT(RCC_CR,1))); /* Check if enabled */
-		RCC_CFGR = 0x00000000;
-	
+		
 	#elif   RCC_CLOCK_TYPE == RCC_PLL
+		
+	RCC_CFGR = ( RCC_CFGR | ((RCC_PLL_MUL_VAL - 2) << 18) ); /* Set PLL Multiplier */
+	
 		#if   RCC_PLL_INPUT == RCC_PLL_IN_HSI_DIV_2
+			
+			RCC_CFGR = (0x00000002 | (RCC_USB_PRE<<22)| ((RCC_PLL_MUL_VAL - 2) << 18) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+		
 			RCC_CR = 0x01000081; /* Enable PLL With HSI + Trimming = 0 */
 			//while(!(GET_BIT(RCC_CR,1))); /* Check if enabled */
 			//while(!(GET_BIT(RCC_CR,25))); /* Check if enabled */
-			RCC_CFGR = 0x00000002;
-		
+			
 		#elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_CRYSTAL_DIV_2
+			
+			RCC_CFGR = (0x00030002 | (RCC_USB_PRE<<22)| ((RCC_PLL_MUL_VAL - 2) << 18) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+			
 			RCC_CR = 0x01010000; /* Enable PLL With HSI + Trimming = 0 */
 			//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
 			//while(!(GET_BIT(RCC_CR,25))); /* Check if enabled */
-			RCC_CFGR = 0x00030002;
-	
+			
 		#elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_CRYSTAL
+			
+			RCC_CFGR = (0x00010002 | (RCC_USB_PRE<<22)| ((RCC_PLL_MUL_VAL - 2) << 18) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+			
 			RCC_CR = 0x01010000; /* Enable PLL With HSI + Trimming = 0 */
 			//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
 			//while(!(GET_BIT(RCC_CR,25))); /* Check if enabled */
-			RCC_CFGR = 0x00010002;
 			
 		#elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_RC_DIV_2
+			
+			RCC_CFGR = (0x00030002 | (RCC_USB_PRE<<22)| ((RCC_PLL_MUL_VAL - 2) << 18) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+			
 			RCC_CR = 0x01050000; /* Enable PLL With HSI + Trimming = 0 */
 			//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
 			//while(!(GET_BIT(RCC_CR,25))); /* Check if enabled */
-			RCC_CFGR = 0x00030002;
-	
+			
 		#elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_RC
+		
+			RCC_CFGR = ( 0x00010002 | (RCC_USB_PRE<<22)| ((RCC_PLL_MUL_VAL - 2) << 18) |(RCC_ADC_PRE<<14) |(RCC_APB2_PRE<<11) |(RCC_APB1_PRE<<8)|(RCC_AHB_PRE<<4));
+			
 			RCC_CR = 0x01050000; /* Enable PLL With HSI + Trimming = 0 */
 			//while(!(GET_BIT(RCC_CR,17))); /* Check if enabled */
 			//while(!(GET_BIT(RCC_CR,25))); /* Check if enabled */
-			RCC_CFGR = 0x00010002;
-		
-		#endif
-		
-		RCC_CFGR = ( RCC_CFGR | ((RCC_PLL_MUL_VAL - 2) << 18) ); /* Set PLL Multiplier */  
+			
+		#endif  
 	
 	#else
 		#error("You chosed Wrong Clock type")

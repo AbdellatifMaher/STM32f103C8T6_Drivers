@@ -32,5 +32,38 @@
 #define RCC_PLL_MUL_VAL   4
 #endif
 
+/* Options:    RCC_USB_DIV_1_5
+               RCC_USB_NO_DIV  */
+#define RCC_USB_PRE    RCC_USB_NO_DIV
+
+/* Options:     RCC_HCLK_NO_DIV
+                RCC_HCLK_DIV_2	 
+				RCC_HCLK_DIV_4  
+				RCC_HCLK_DIV_8  
+				RCC_HCLK_DIV_16 */
+
+#define RCC_APB1_PRE      RCC_HCLK_NO_DIV             /* Max Freq = 36M Hz */
+#define RCC_APB2_PRE      RCC_HCLK_NO_DIV
+
+
+/* Options:     RCC_SYSCLK_NO_DIV   
+                RCC_SYSCLK_DIV_2     
+				RCC_SYSCLK_DIV_4     
+				RCC_SYSCLK_DIV_8     
+				RCC_SYSCLK_DIV_16    
+				RCC_SYSCLK_DIV_64   
+				RCC_SYSCLK_DIV_128  
+				RCC_SYSCLK_DIV_256  
+				RCC_SYSCLK_DIV_512	*/
+
+#define RCC_AHB_PRE      RCC_SYSCLK_NO_DIV 
+
+/* Options:     RCC_PCLK2_DIV_2 
+                RCC_PCLK2_DIV_4  
+				RCC_PCLK2_DIV_6  
+				RCC_PCLK2_DIV_8  */
+
+#define RCC_ADC_PRE      RCC_PCLK2_DIV_2
+
 
 #endif
